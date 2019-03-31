@@ -1,0 +1,13 @@
+{
+    "allow": [
+        "*.domainallowed.com"
+    ],
+    
+    "block" : [
+        "*.domainnotallowed.com"
+    ],
+    
+    "exceptions": {
+        "*.domainallowed.com": ["page1-notallowed","page2-notallowed","page3-notallowed","page4-notallowed","page5-notallowed"]
+    }
+}

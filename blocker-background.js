@@ -88,7 +88,6 @@ browser.webRequest.onBeforeRequest.addListener(checkLink,{urls: ["<all_urls>"], 
 function checkLink(details) {
     convertLocalData();
     currURL = details.url;
-    console.log(localData);
     if (localData.allowList[0] !== null) {
         if (!localData.allowList[0].some(testlink)) {
             if (testExceptions() !== 1) {

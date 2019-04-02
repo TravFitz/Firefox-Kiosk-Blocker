@@ -1,0 +1,32 @@
+{
+    "manifest_version": 2,
+    "name": "Kiosk Link Blocker",
+    "version": "1.0",
+    "description": "Kisok mode link blocker, prevent users visiting linked pages.",
+    
+    "background": {
+        "scripts": ["blocker-background.js"]
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "js": ["kiosk-block.js"],
+            "run_at": "document_start"
+        }
+    ],
+    "permissions": [
+        "webRequest",
+        "tabs",
+        "activeTab",
+        "storage",
+        "webRequestBlocking",
+        "<all_urls>"
+    ],
+    
+    "options_ui": {
+        "page": "options/blocker-options.html",
+        "browser_style": true
+    }
+}

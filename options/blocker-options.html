@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8"/>
+  </head>
+
+  <body>
+    <form>
+        <label>External JSON list link (optional, will override local variables for more information see our github page <a href="https://github.com/TravFitz/Firefox-Kiosk-Blocker">https://github.com/TravFitz/Firefox-Kiosk-Blocker</a>)</label>
+      <input type="text" size="200" id="external_json"/>
+      <br/><br/>
+      <label>Allow list (domains to allow from the Kiosk separated by return. If this contains links, all other links besides these links will be blocked.)</label>
+      <textarea rows="7" cols="90" name="allows_list" id="allows_list"></textarea>
+      <br/><br/>
+      <label>Block list (domains not allowed to be accessed from the kiosk, separate domains with a return. If this contains links, all other links besides these links will be allowed.)</label>
+      <textarea rows="7" cols="90" name="block_list" id="block_list"></textarea>
+      <br/><br/>
+      <label>Exceptions list (allow domains that are in the allowed list but blocking some pages from them, or if the domain is on the block list will allow these pages. Separate pages with a comma and domains with a return. See example below for more details)</label>
+      <textarea rows="7" cols="90" name="exceptions_list" id="exceptions_list"></textarea>
+    </form>
+    <script src="options.js"></script>
+  </body>
+</html>

@@ -49,12 +49,12 @@ function updateStorage() {
     var exceptionDomains = {};
     var allowDomains;
     var blockDomains;
-    if (!allowListEle.value.includes("eg:")) {
+    if (!allowListEle.value.includes("eg:") || !allowListEle.value === "") {
         allowDomains = allowListEle.value.split("\n");
     } else {
         allowDomains = null;
     }
-    if (!blockListEle.value.includes("eg:")) {
+    if (!blockListEle.value.includes("eg:") || !blockListEle.value === "") {
         blockDomains = blockListEle.value.split("\n");
     } else {
         blockDomains = null;
@@ -62,7 +62,7 @@ function updateStorage() {
     var exceptionSplit = exceptionListEle.value.split("\n");
     exceptionSplit.forEach(function (element) {
         var tsplit = element.split(":");
-        if (tsplit.length > 1 && tsplit[0] !== "eg") {
+        if (tsplit.length > 1 && tsplit[0] !== "eg" || tsplit[0] !== "") {
             exceptionDomains[tsplit[0]] = tsplit[1].split(",");
         }
     });

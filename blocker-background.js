@@ -6,6 +6,9 @@ function onError(e) {
   console.error(e);
 }
 
+/*
+ * convert storage to local variable and if external JSON is defined update stored definitions.
+ */
 function storedSetup(value) {
     localData = value;
     if (localData.externalJSON !== "") {

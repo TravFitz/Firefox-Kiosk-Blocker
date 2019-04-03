@@ -99,7 +99,7 @@ function checkLink(details) {
                 });
             }
         } else {
-            if (testExceptions() === 1 || testExceptions() === 0) {
+            if (testExceptions() === 1) {
                 browser.tabs.query({active: true, currentWindow: true}, function (tabs) {
                     browser.tabs.sendMessage(tabs[0].id, {greeting: "back"}).catch(onError);
                 });
@@ -123,11 +123,14 @@ function testExceptions() {
     var linksplit = currURL.split("/",3);
     var domain = "*."+linksplit[2].replace("www.","");
     var fullyQualifiedDomain = linksplit[0]+"//"+linksplit[2];
+    var exceptionDomains = Object.keys(localData.exceptionsList.exceptionDomains);
+    var matchdomain = exceptionDomains.filter(s => s.includes(domain));
+    var matchFQD = exceptionDomains.filter(s => s.includes(fullyQualifiedDomain));
     var usableDomain;
-    if (localData.exceptionsList.exceptionDomains.hasOwnProperty(domain)) {
-        usableDomain = domain;
-    } else if (localData.exceptionsList.exceptionDomains.hasOwnProperty(fullyQualifiedDomain)) {
-        usableDomain = fullyQualifiedDomain;
+    if (matchdomain.length > 0) {
+        usableDomain = matchdomain[0];
+    } else if (matchFQD.length > 0) {
+        usableDomain = matchFQD[0];
     }
     if (typeof usableDomain !== 'undefined') {
         if (localData.exceptionsList.exceptionDomains[usableDomain].some(testlink)) {

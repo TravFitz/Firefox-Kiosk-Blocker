@@ -92,13 +92,19 @@ function checkLink(details) {
     convertLocalData();
     currURL = details.url;
     if (localData.allowList[0] !== null) {
+        console.log("allow list not empty");
+        console.log(localData.allowList[0]);
+        console.log(currURL);
         if (!localData.allowList[0].some(testlink)) {
+            console.log("page not on allow list");
             if (testExceptions() !== 1) {
                 browser.tabs.query({active: true, currentWindow: true}, function (tabs) {
                     browser.tabs.sendMessage(tabs[0].id, {greeting: "back"}).catch(onError);
                 });
             }
         } else {
+            console.log("page on allow list");
+            console.log(localData.allowList[0]);
             if (testExceptions() === 1) {
                 browser.tabs.query({active: true, currentWindow: true}, function (tabs) {
                     browser.tabs.sendMessage(tabs[0].id, {greeting: "back"}).catch(onError);
@@ -121,11 +127,16 @@ function checkLink(details) {
  */
 function testExceptions() {
     var linksplit = currURL.split("/",3);
+    console.log(linksplit);
     var domain = "*."+linksplit[2].replace("www.","");
+    console.log(domain);
     var fullyQualifiedDomain = linksplit[0]+"//"+linksplit[2];
+    console.log(fullyQualifiedDomain);
     var exceptionDomains = Object.keys(localData.exceptionsList.exceptionDomains);
     var matchdomain = exceptionDomains.filter(s => s.includes(domain));
+    console.log(matchdomain);
     var matchFQD = exceptionDomains.filter(s => s.includes(fullyQualifiedDomain));
+    console.log(matchFQD);
     var usableDomain;
     if (matchdomain.length > 0) {
         usableDomain = matchdomain[0];
@@ -134,11 +145,14 @@ function testExceptions() {
     }
     if (typeof usableDomain !== 'undefined') {
         if (localData.exceptionsList.exceptionDomains[usableDomain].some(testlink)) {
+            console.log("returning 1");
             return 1;
         } else {
+            console.log("returning 2");
             return 2;
         }
     } else {
+        console.log("returning 0");
         return 0;
     }
 }
@@ -157,7 +171,7 @@ function convertLocalData() {
     localData.blockList.forEach(function(innerArray) {
         if (innerArray !== null) {
             innerArray.forEach(function (value) {
-                innerArray[innerArray.indexOf(value)] = value.replace("*", "");
+                innerArray[innerArray.indexOf(value)] = value.replace("*.", "");
             });
         }
         localData.blockList[0] = innerArray;
@@ -165,7 +179,7 @@ function convertLocalData() {
     localData.allowList.forEach(function(innerArray) {
         if (innerArray !== null) {
             innerArray.forEach(function (value) {
-                innerArray[innerArray.indexOf(value)] = value.replace("*", "");
+                innerArray[innerArray.indexOf(value)] = value.replace("*.", "");
             });
         }
         localData.allowList[0] = innerArray;
